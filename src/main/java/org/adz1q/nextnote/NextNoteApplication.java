@@ -8,6 +8,8 @@ public class NextNoteApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(NextNoteApplication.class, args);
+
+        System.out.println("Hello Piesek");
     }
 
 }
