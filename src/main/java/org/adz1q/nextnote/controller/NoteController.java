@@ -40,7 +40,7 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteNote(@PathVariable int id) {
-        return noteService.deleteNote(id);
+    public ResponseEntity<Object> deleteNote(@PathVariable int id, @RequestParam String username, @RequestParam String password) {
+        return noteService.deleteNote(id, username, password);
     }
 }
