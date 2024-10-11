@@ -20,17 +20,17 @@ public class UserService {
 
     public ResponseEntity<Object> createUser(User user) {
         userRepository.save(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return ResponseEntity.ok(user);
     }
 
     public ResponseEntity<Object> getUser(int id) {
         Optional<User> optionalUser = userRepository.findById(id);
 
-        if(!optionalUser.isPresent()) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        if(!optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
         User user = optionalUser.get();
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok(user);
     }
 }

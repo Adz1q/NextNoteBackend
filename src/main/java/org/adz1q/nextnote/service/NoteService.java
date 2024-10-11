@@ -3,10 +3,10 @@ package org.adz1q.nextnote.service;
 import org.adz1q.nextnote.model.Note;
 import org.adz1q.nextnote.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +21,14 @@ public class NoteService {
 
     public ResponseEntity<Object> createNote(Note note) {
         noteRepository.save(note);
-        return new ResponseEntity<>(note, HttpStatus.CREATED);
+        return ResponseEntity.ok(note);
     }
 
     public ResponseEntity<Object> updateNote(int id, Note note) {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
-        if(!optionalNote.isPresent()) {
-            return new ResponseEntity<>("Note not found", HttpStatus.NOT_FOUND);
+        if(!optionalNote.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
         Note existingNote = optionalNote.get();
@@ -37,32 +37,33 @@ public class NoteService {
         existingNote.setContent(note.getContent());
 
         noteRepository.save(existingNote);
-        return new ResponseEntity<>(existingNote, HttpStatus.OK);
+        return ResponseEntity.ok(existingNote);
     }
 
     public ResponseEntity<Object> getNote(int id) {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
-        if(!optionalNote.isPresent()) {
-            return new ResponseEntity<>("Note not found", HttpStatus.NOT_FOUND);
+        if(!optionalNote.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
         Note note = optionalNote.get();
-        return new ResponseEntity<>(note, HttpStatus.OK);
+        return ResponseEntity.ok(note);
     }
 
     public List<Note> getNotesByUserId(int userId) {
         return noteRepository.findByUserId(userId);
     }
 
+
     public ResponseEntity<Object> deleteNote(int id) {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
-        if(!optionalNote.isPresent()) {
-            return new ResponseEntity<>("Note not found", HttpStatus.NOT_FOUND);
+        if(!optionalNote.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
         noteRepository.deleteById(id);
-        return new ResponseEntity<>("Note deleted", HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }
