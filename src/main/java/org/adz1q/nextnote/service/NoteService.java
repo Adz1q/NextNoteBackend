@@ -92,11 +92,7 @@ public class NoteService {
         String realUsername = user.getUsername();
         String realPassword = user.getPassword();
 
-        if(!realUsername.equals(username)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        if(!realPassword.equals(hashPassword(password))) {
+        if(!realUsername.equals(username) || !realPassword.equals(hashPassword(password))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
