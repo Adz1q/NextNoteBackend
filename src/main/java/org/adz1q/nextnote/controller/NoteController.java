@@ -35,7 +35,7 @@ public class NoteController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Note> getNotesByUserId(@PathVariable int userId) {
+    public ResponseEntity<Object> getNotesByUserId(@PathVariable int userId) {
         return noteService.getNotesByUserId(userId);
     }
 

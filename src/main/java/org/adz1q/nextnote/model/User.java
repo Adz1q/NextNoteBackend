@@ -12,7 +12,4 @@ public class User {
     private int id;
     private String username;
     private String password;
-
-    //Zrobić autoryzację - działa ale przy dużych literach pokazuję, że się nie zgadza
-    //Naprawić wyszukiwanie notatek po id użytkownika
 }

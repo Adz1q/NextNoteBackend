@@ -68,8 +68,14 @@ public class NoteService {
         return ResponseEntity.ok(note);
     }
 
-    public List<Note> getNotesByUserId(int userId) {
-        return noteRepository.findByUserId(userId);
+    public ResponseEntity<Object> getNotesByUserId(int userId) {
+        List<Note> notes = noteRepository.findByUserId(userId);
+
+        if(notes.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(notes);
     }
 
     public ResponseEntity<Object> deleteNote(int id, String username, String password) {
