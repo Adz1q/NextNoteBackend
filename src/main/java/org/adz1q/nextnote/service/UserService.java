@@ -54,7 +54,7 @@ public class UserService {
         return ResponseEntity.ok(user);
     }
 
-    public ResponseEntity<?> login(LoginRequest loginRequest) {
+    public ResponseEntity<Object> login(LoginRequest loginRequest) {
         Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
 
         if(optionalUser.isEmpty()) {
