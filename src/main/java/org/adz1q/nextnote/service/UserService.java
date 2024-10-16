@@ -3,47 +3,72 @@ package org.adz1q.nextnote.service;
 import org.adz1q.nextnote.model.User;
 import org.adz1q.nextnote.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final MessageDigest messageDigest;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) throws NoSuchAlgorithmException {
+    public UserService(UserRepository userRepository, JwtService jwtService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.messageDigest = MessageDigest.getInstance("SHA-256");
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    private String hashPassword(String password) {
-        byte[] hashedBytes = messageDigest.digest(password.getBytes());
-        StringBuilder sb = new StringBuilder();
-        for (byte b : hashedBytes) {
-            sb.append(String.format("%02x", b));
+    public static class JwtResponse {
+        private String token;
+
+        public JwtResponse(String token) {
+            this.token = token;
         }
-        return sb.toString();
+
+        public String getToken() {
+            return token;
+        }
     }
 
-    public ResponseEntity<Object> createUser(User user) {
-        user.setPassword(hashPassword(user.getPassword()));
+    public static class LoginRequest {
+        private String username;
+        private String password;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+    }
+
+    public ResponseEntity<Object> register(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(user);
     }
 
-    public ResponseEntity<Object> getUser(int id) {
-        Optional<User> optionalUser = userRepository.findById(id);
+    public ResponseEntity<?> login(LoginRequest loginRequest) {
+        Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
 
         if(optionalUser.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         User user = optionalUser.get();
-        return ResponseEntity.ok(user);
+
+        if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        String jwtToken = jwtService.generateToken(loginRequest.getUsername());
+
+        return ResponseEntity.ok(new JwtResponse(jwtToken));
     }
 }
