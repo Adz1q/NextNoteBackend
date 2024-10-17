@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/api/db/note")
 public class NoteController {
@@ -19,12 +17,12 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<Object> createNote(@RequestBody Note note) {
         return noteService.createNote(note);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity<Object> updateNote(@PathVariable int id, @RequestBody Note note) {
         return noteService.updateNote(id, note);
     }
@@ -39,8 +37,8 @@ public class NoteController {
         return noteService.getNotesByUserId(userId);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteNote(@PathVariable int id, @RequestParam String username, @RequestParam String password) {
-        return noteService.deleteNote(id, username, password);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteNote(@PathVariable int id) {
+        return noteService.deleteNote(id);
     }
 }

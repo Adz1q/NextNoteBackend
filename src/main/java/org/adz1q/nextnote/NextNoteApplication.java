@@ -11,5 +11,4 @@ public class NextNoteApplication {
 
         System.out.println("Hello Piesek");
     }
-
 }
