@@ -48,6 +48,17 @@ public class UserService {
         }
     }
 
+    public ResponseEntity<Object> getUser(String username) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+
+        if(optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+        }
+
+        User user = optionalUser.get();
+        return ResponseEntity.ok(user);
+    }
+
     public ResponseEntity<Object> register(User user) {
         Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
 

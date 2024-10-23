@@ -17,6 +17,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<Object> getUser(@PathVariable String username) {
+        return userService.getUser(username);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody User user) {
         return userService.register(user);
