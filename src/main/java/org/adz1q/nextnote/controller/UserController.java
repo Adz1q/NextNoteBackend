@@ -4,10 +4,10 @@ import org.adz1q.nextnote.model.User;
 import org.adz1q.nextnote.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
 @RequestMapping("/api/db/user")
 public class UserController {
     private final UserService userService;
@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserService.LoginRequest loginRequest) {
+    public ResponseEntity<Object> login(@RequestBody UserService.LoginRequest loginRequest) {
         return userService.login(loginRequest);
     }
 }

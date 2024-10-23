@@ -4,10 +4,9 @@ import org.adz1q.nextnote.model.Note;
 import org.adz1q.nextnote.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api/db/note")
 public class NoteController {
     private final NoteService noteService;

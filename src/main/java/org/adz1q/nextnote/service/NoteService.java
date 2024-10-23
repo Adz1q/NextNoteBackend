@@ -3,6 +3,7 @@ package org.adz1q.nextnote.service;
 import org.adz1q.nextnote.model.Note;
 import org.adz1q.nextnote.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
         if(optionalNote.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");
         }
 
         Note existingNote = optionalNote.get();
@@ -43,7 +44,7 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
         if(optionalNote.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");
         }
 
         Note note = optionalNote.get();
@@ -54,7 +55,7 @@ public class NoteService {
         List<Note> notes = noteRepository.findByUserId(userId);
 
         if(notes.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No notes found!");
         }
 
         return ResponseEntity.ok(notes);
@@ -64,7 +65,7 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
         if(optionalNote.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");
         }
 
         noteRepository.deleteById(id);
