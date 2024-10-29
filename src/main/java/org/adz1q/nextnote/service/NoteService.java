@@ -51,8 +51,8 @@ public class NoteService {
         return ResponseEntity.ok(note);
     }
 
-    public ResponseEntity<Object> getNotesByUserId(int userId) {
-        List<Note> notes = noteRepository.findByUserId(userId);
+    public ResponseEntity<Object> getNotesByUsername(String username) {
+        List<Note> notes = noteRepository.findByUsername(username);
 
         if(notes.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No notes found!");

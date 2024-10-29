@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/db/note")
 public class NoteController {
@@ -31,9 +32,9 @@ public class NoteController {
         return noteService.getNote(id);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<Object> getNotesByUserId(@PathVariable int userId) {
-        return noteService.getNotesByUserId(userId);
+    @GetMapping("/user/{username}")
+    public ResponseEntity<Object> getNotesByUsername(@PathVariable String username) {
+        return noteService.getNotesByUsername(username);
     }
 
     @DeleteMapping("/delete/{id}")
