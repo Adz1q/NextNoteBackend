@@ -11,6 +11,7 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private String username;
 }
