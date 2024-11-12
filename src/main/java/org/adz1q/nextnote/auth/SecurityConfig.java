@@ -31,6 +31,7 @@ public class SecurityConfig {
             .authorizeHttpRequests()
             .requestMatchers("/api/db/user/login").permitAll()
                 .requestMatchers("/api/db/user/register").permitAll()
+                .requestMatchers("/api/db/note/{id}").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
