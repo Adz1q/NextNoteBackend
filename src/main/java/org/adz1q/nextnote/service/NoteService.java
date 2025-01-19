@@ -24,8 +24,8 @@ public class NoteService {
         return ResponseEntity.ok(note);
     }
 
-    public ResponseEntity<Object> updateNote(int id, Note note) {
-        Optional<Note> optionalNote = noteRepository.findById(id);
+    public ResponseEntity<Object> updateNote(Note note) {
+        Optional<Note> optionalNote = noteRepository.findById(note.getId());
 
         if(optionalNote.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");

@@ -22,9 +22,9 @@ public class NoteController {
         return noteService.createNote(note);
     }
 
-    @PostMapping("/update/{id}")
-    public ResponseEntity<Object> updateNote(@PathVariable int id, @RequestBody Note note) {
-        return noteService.updateNote(id, note);
+    @PostMapping("/update")
+    public ResponseEntity<Object> updateNote(@RequestBody Note note) {
+        return noteService.updateNote(note);
     }
 
     @GetMapping("/{id}")

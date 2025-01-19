@@ -1,5 +1,6 @@
 package org.adz1q.nextnote.service;
 
+import lombok.Data;
 import org.adz1q.nextnote.model.User;
 import org.adz1q.nextnote.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +24,19 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Data
     public static class JwtResponse {
         private String token;
 
         public JwtResponse(String token) {
             this.token = token;
         }
-
-        public String getToken() {
-            return token;
-        }
     }
 
+    @Data
     public static class LoginRequest {
         private String username;
         private String password;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
     }
 
     public ResponseEntity<Object> getUser(String username) {
