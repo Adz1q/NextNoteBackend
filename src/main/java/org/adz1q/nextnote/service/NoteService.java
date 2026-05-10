@@ -27,7 +27,7 @@ public class NoteService {
     public ResponseEntity<Object> updateNote(Note note) {
         Optional<Note> optionalNote = noteRepository.findById(note.getId());
 
-        if(optionalNote.isEmpty()) {
+        if (optionalNote.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");
         }
 
@@ -43,7 +43,7 @@ public class NoteService {
     public ResponseEntity<Object> getNote(int id) {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
-        if(optionalNote.isEmpty()) {
+        if (optionalNote.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");
         }
 
@@ -54,7 +54,7 @@ public class NoteService {
     public ResponseEntity<Object> getNotesByUsername(String username) {
         List<Note> notes = noteRepository.findByUsername(username);
 
-        if(notes.isEmpty()) {
+        if (notes.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No notes found!");
         }
 
@@ -64,7 +64,7 @@ public class NoteService {
     public ResponseEntity<Object> deleteNote(int id) {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
-        if(optionalNote.isEmpty()) {
+        if (optionalNote.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found!");
         }
 

@@ -30,14 +30,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and()
-            .csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/api/db/user/login").permitAll()
+                .csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/db/user/login").permitAll()
                 .requestMatchers("/api/db/user/register").permitAll()
                 .requestMatchers("/api/db/note/{id}").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .requestMatchers("/v3/api-docs").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
